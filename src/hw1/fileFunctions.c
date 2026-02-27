@@ -79,7 +79,7 @@ char* fscanfTable(FILE* f, int** maxLen, int* numHeaderOut, int* lenTableOut)
             curLen = 0;
         }
 
-        buffer[lenTable - 1] = (char) c;
+        buffer[lenTable - 1] = (char)c;
         c = fgetc(f);
     }
     if (curHeader != numHeader)
