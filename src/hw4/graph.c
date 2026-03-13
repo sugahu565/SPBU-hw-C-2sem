@@ -65,21 +65,21 @@ void freeGraph(Graph* g) {
 
 
 int connectVertices(Graph* g, int v1, int v2, int value) {
-    if (g == NULL || v1 <= 0 || v1 > g->sizeMatrix || v2 <= 0 || v2 > g->sizeMatrix)
+    if (g == NULL || v1 < 0 || v1 >= g->sizeMatrix || v2 < 0 || v2 >= g->sizeMatrix)
         return -1;
     
-    g->matrix[v1 - 1][v2 - 1] = value;
-    g->matrix[v2 - 1][v1 - 1] = value;
+    g->matrix[v1][v2] = value;
+    g->matrix[v2][v1] = value;
     
     return 0;
 }
 
 
 void startGetNeighbors(Graph* g, int vertex) {
-    if (g == NULL || vertex < 0 || vertex > g->sizeMatrix)
+    if (g == NULL || vertex < 0 || vertex >= g->sizeMatrix)
         return;
 
-    g->curVertex = vertex - 1;
+    g->curVertex = vertex;
     g->lastNeighbor = 0;
 }
 
@@ -91,18 +91,17 @@ int getNeighbor(Graph* g, int* value) {
     int i = g->lastNeighbor;
     while (i < g->sizeMatrix && g->matrix[g->curVertex][i] == 0)
         i++;
-    
-    i++;
 
-    g->lastNeighbor = i;
+    g->lastNeighbor = i + 1;
 
     if (g->lastNeighbor > g->sizeMatrix) {
         g->lastNeighbor = -1;
         g->curVertex = -1;
+        i = -1;
     } else {
-        *value = g->matrix[g->curVertex][i - 1];
+        *value = g->matrix[g->curVertex][i];
     }
     
-    return g->lastNeighbor;
+    return i;
 }
 

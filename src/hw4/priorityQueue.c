@@ -62,7 +62,7 @@ void siftDown(priorQueue* q, int indexNode) {
     }
 }
 
-int insertNode(priorQueue* q, int key, int value) {
+int insertMin(priorQueue* q, int key, int value) {
 
     if (q->sizeAlloc == 0) {
         q->allNodes = malloc(sizeof(Node));
@@ -101,6 +101,8 @@ void deleteMin(priorQueue* q) {
 }
 
 int getMin(priorQueue* q) {
+    if (q->nextNode == 0)
+        return -1;
     return q->allNodes[0].value;
 }
 

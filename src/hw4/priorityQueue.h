@@ -4,7 +4,7 @@ typedef struct priorQueue priorQueue;
 
 priorQueue* initQueue(void);
 
-int insertNode(priorQueue* q, int key, int value);
+int insertMin(priorQueue* q, int key, int value);
 
 void deleteMin(priorQueue* q);
 
