@@ -1,15 +1,15 @@
 #pragma once
 
-typedef struct priorQueue priorQueue;
+typedef struct PriorQueue PriorQueue;
 
-priorQueue* initQueue(void);
+PriorQueue* initQueue(void);
 
-int insertMin(priorQueue* q, int key, int value);
+int insertMin(PriorQueue* q, int key, int value);
 
-void deleteMin(priorQueue* q);
+void deleteMin(PriorQueue* q);
 
-int getMin(priorQueue* q);
+int getMin(PriorQueue* q);
 
-int sizeQueue(priorQueue* q);
+int sizeQueue(PriorQueue* q);
 
-void freeQueue(priorQueue* q);
+void freeQueue(PriorQueue* q);

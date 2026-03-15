@@ -12,7 +12,7 @@ int expected3[] = { 0, 0, 0, 3, 3, 3 };
 
 int expected4[] = { 1, 1, 1, 3, 1, 5 };
 
-int solveFunction(char* nameTestFile, const int* expected)
+int solveFunction(char* nameTestFile, const int* expected, int sizeOfExpected)
 {
     Graph* g = NULL;
     int n, m, k;
@@ -30,6 +30,12 @@ int solveFunction(char* nameTestFile, const int* expected)
         return -1;
 
     int correctAnswer = 1;
+
+    if (n != sizeOfExpected) {
+        freeAll(capitals, typeOfCity, g, NULL, 0);
+        return -1;
+    }
+
     for (int i = 0; i < n; ++i) {
         if (expected[i] != typeOfCity[i]) {
             correctAnswer = 0;
@@ -45,7 +51,7 @@ int main(void)
 {
     int passedTests = 0;
 
-    int err = solveFunction("input_files/input1.txt", expected1);
+    int err = solveFunction("input_files/input1.txt", expected1, 3);
     if (err == -1)
         printf("...something went wrong\n");
     else if (err == 0)
@@ -55,7 +61,7 @@ int main(void)
         passedTests++;
     }
 
-    err = solveFunction("input_files/input2.txt", expected2);
+    err = solveFunction("input_files/input2.txt", expected2, 5);
     if (err == -1)
         printf("...something went wrong\n");
     else if (err == 0)
@@ -65,7 +71,7 @@ int main(void)
         passedTests++;
     }
 
-    err = solveFunction("input_files/input3.txt", expected3);
+    err = solveFunction("input_files/input3.txt", expected3, 6);
     if (err == -1)
         printf("...something went wrong\n");
     else if (err == 0)
@@ -75,7 +81,7 @@ int main(void)
         passedTests++;
     }
 
-    err = solveFunction("input_files/input4.txt", expected4);
+    err = solveFunction("input_files/input4.txt", expected4, 6);
     if (err == -1)
         printf("...something went wrong\n");
     else if (err == 0)

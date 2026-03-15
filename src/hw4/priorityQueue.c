@@ -7,22 +7,23 @@ typedef struct Node {
     int value;
 } Node;
 
-struct priorQueue {
+struct PriorQueue {
     int sizeAlloc;
     int nextNode;
     Node* allNodes;
 };
 
-priorQueue* initQueue(void)
+PriorQueue* initQueue(void)
 {
-    priorQueue* q = malloc(sizeof(priorQueue));
+    PriorQueue* q = malloc(sizeof(PriorQueue));
     q->sizeAlloc = 0;
     q->nextNode = 0;
     q->allNodes = NULL;
     return q;
 }
 
-void siftUp(priorQueue* q, int indexNode)
+
+void siftUp(PriorQueue* q, int indexNode) // NOLINT(misc-no-recursion)
 {
     // q->allNodes + curNode * sizeof(Node) = указатель на ноду в списке нодов
     if (indexNode == 0)
@@ -37,11 +38,11 @@ void siftUp(priorQueue* q, int indexNode)
         *curNode = *parent;
         *parent = temp;
 
-        siftUp(q, (indexNode - 1) / 2);
+        siftUp(q, (indexNode - 1) / 2); // NOLINT(misc-no-recursion)
     }
 }
 
-void siftDown(priorQueue* q, int indexNode)
+void siftDown(PriorQueue* q, int indexNode) // NOLINT(misc-no-recursion)
 {
 
     int lChild = indexNode * 2 + 1;
@@ -63,11 +64,11 @@ void siftDown(priorQueue* q, int indexNode)
         Node temp = *curNode;
         *curNode = *minChild;
         *minChild = temp;
-        siftDown(q, minChildIndex);
+        siftDown(q, minChildIndex); // NOLINT(misc-no-recursion)
     }
 }
 
-int insertMin(priorQueue* q, int key, int value)
+int insertMin(PriorQueue* q, int key, int value)
 {
 
     if (q->sizeAlloc == 0) {
@@ -96,7 +97,7 @@ int insertMin(priorQueue* q, int key, int value)
     return 0;
 }
 
-void deleteMin(priorQueue* q)
+void deleteMin(PriorQueue* q)
 {
     if (q->nextNode == 0)
         return;
@@ -107,19 +108,19 @@ void deleteMin(priorQueue* q)
     siftDown(q, 0);
 }
 
-int getMin(priorQueue* q)
+int getMin(PriorQueue* q)
 {
     if (q->nextNode == 0)
         return -1;
     return q->allNodes[0].value;
 }
 
-int sizeQueue(priorQueue* q)
+int sizeQueue(PriorQueue* q)
 {
     return q->nextNode;
 }
 
-void freeQueue(priorQueue* q)
+void freeQueue(PriorQueue* q)
 {
     if (q->allNodes != NULL)
         free(q->allNodes);

@@ -24,7 +24,7 @@ int** initMatrix(int n)
     for (int i = 0; i < n; ++i)
         matrix[i] = &data[i * n];
 
-    return matrix;
+    return matrix; // NOLINT(clang-analyzer-unix.Malloc)
 }
 
 void freeMatrix(int** matrix)

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void freeAllQueues(priorQueue** q, int size)
+void freeAllQueues(PriorQueue** q, int size)
 {
     int i = 0;
     while (i < size && q[i] != NULL) {
@@ -14,7 +14,7 @@ void freeAllQueues(priorQueue** q, int size)
     free(q);
 }
 
-void freeAll(int* capitals, int* typeOfCity, Graph* g, priorQueue** allQueues, int numAllocQueues)
+void freeAll(int* capitals, int* typeOfCity, Graph* g, PriorQueue** allQueues, int numAllocQueues)
 {
     if (capitals != NULL)
         free(capitals);
@@ -29,7 +29,7 @@ void freeAll(int* capitals, int* typeOfCity, Graph* g, priorQueue** allQueues, i
 int solve(Graph* g, int k, int* capitals, int* typeOfCity)
 {
 
-    priorQueue** allQueues = malloc(sizeof(priorQueue*) * k);
+    PriorQueue** allQueues = malloc(sizeof(PriorQueue*) * k);
     if (allQueues == NULL) {
         freeAll(capitals, typeOfCity, g, NULL, 0);
         return -1;
