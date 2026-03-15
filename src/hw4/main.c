@@ -96,25 +96,9 @@ int readInput(const char* filename, Graph** g, int* n, int* m, int* k, int** cap
     return 0;
 }
 
-int main(void)
-{
-    Graph* g = NULL;
-    int n, m, k;
-    int* capitals = NULL;
-    int* typeOfCity = NULL;
-
-    if (readInput("input.txt", &g, &n, &m, &k, &capitals, &typeOfCity) != 0) {
-        printf("input is wrong\n");
-        return -1;
-    }
-
-    // capitals - список столиц (для сохранения очередности)
-    // typeOfCity - каждому городу по индексу присваивается принадлежность какому-то гос-ву (иначе -1)
-    // allQueues - все очереди (обращаться по индексу, в котором столица лежит в capitals)
-    // g - исходный граф (можно смотреть всех соседей по имитации итератора)
-
-    priorQueue** allQueues = malloc(sizeof(priorQueue*) * k);
+int solve(Graph* g, int n, int k, int* capitals, int* typeOfCity) {
     
+    priorQueue** allQueues = malloc(sizeof(priorQueue*) * k); 
     if (allQueues == NULL) {
         freeAll(capitals, typeOfCity, g, NULL, 0);
         return -1;
@@ -138,7 +122,6 @@ int main(void)
     }
 
     int notNullQueue = k;
-
     int curIndexCapital = 0;
     int curCapital = capitals[curIndexCapital];
 
@@ -174,7 +157,6 @@ int main(void)
         typeOfCity[nextVertex] = curCapital;
         startGetNeighbors(g, nextVertex);
 
-
         int val;
         int neigbor = getNeighbor(g, &val);
         while (neigbor != -1) { // добавляем смежные вершины
@@ -191,6 +173,33 @@ int main(void)
         curIndexCapital = (curIndexCapital + 1) % k;
         curCapital = capitals[curIndexCapital];
     }
+    freeAll(capitals, typeOfCity, g, allQueues, k);
+    return 0;
+}
+
+
+int main(void)
+{
+    Graph* g = NULL;
+    int n, m, k;
+    int* capitals = NULL;
+    int* typeOfCity = NULL;
+
+    if (readInput("input.txt", &g, &n, &m, &k, &capitals, &typeOfCity) != 0) {
+        printf("input is wrong\n");
+        return -1;
+    }
+
+    // capitals - список столиц (для сохранения очередности)
+    // typeOfCity - каждому городу по индексу присваивается принадлежность какому-то гос-ву (иначе -1)
+    // allQueues - все очереди (обращаться по индексу, в котором столица лежит в capitals)
+    // g - исходный граф (можно смотреть всех соседей по имитации итератора)
+
+    int err = solve(g, n, k, capitals, typeOfCity);
+
+    if (err == -1)
+        return -1;
+
     for (int i = 0; i < k; ++i) {
         printf("%d: ", capitals[i] + 1);
         for (int j = 0; j < n; ++j) {
@@ -199,8 +208,6 @@ int main(void)
         }
         printf("\n");
     }
-
-    freeAll(capitals, typeOfCity, g, allQueues, k);
     return 0;
 }
 
