@@ -47,7 +47,6 @@ void freeAll(int* capitals, int* typeOfCity, Graph* g, priorQueue** allQueues, i
 }
 
 
-
 int main(void)
 {
     FILE* f = fopen("input.txt", "r");
@@ -70,7 +69,6 @@ int main(void)
         return -1;
     }
 
-    
     int k;
 
     if (fscanf(f, "%d", &k) != 1) {
@@ -84,12 +82,8 @@ int main(void)
     int* typeOfCity = calloc(n, sizeof(int));
 
     if (capitals == NULL || typeOfCity == NULL) {
-        if (!capitals)
-            free(capitals);
-        if (!typeOfCity)
-            free(typeOfCity);
+        freeAll(capitals, typeOfCity, g, NULL, 0);
         fclose(f);
-        freeGraph(g);
         return -1;
     }
 
@@ -99,9 +93,7 @@ int main(void)
     for (int i = 0; i < k; ++i) {
         int cap;
         if (fscanf(f, "%d", &cap) != 1) {
-            free(capitals);
-            free(typeOfCity);
-            freeGraph(g);
+            freeAll(capitals, typeOfCity, g, NULL, 0);
             fclose(f);
             return -1;
         }
