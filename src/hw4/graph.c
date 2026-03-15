@@ -92,16 +92,15 @@ int getNeighbor(Graph* g, int* value) {
     while (i < g->sizeMatrix && g->matrix[g->curVertex][i] == 0)
         i++;
 
-    g->lastNeighbor = i + 1;
-
-    if (g->lastNeighbor > g->sizeMatrix) {
+    if (i >= g->sizeMatrix) {
         g->lastNeighbor = -1;
         g->curVertex = -1;
-        i = -1;
-    } else {
-        *value = g->matrix[g->curVertex][i];
+        return -1;
     }
-    
+
+    *value = g->matrix[g->curVertex][i];
+    g->lastNeighbor = i + 1;
+
     return i;
 }
 

@@ -23,6 +23,8 @@ priorQueue* initQueue(void) {
 
 void siftUp(priorQueue* q, int indexNode) {
     // q->allNodes + curNode * sizeof(Node) = указатель на ноду в списке нодов
+    if (indexNode == 0)
+        return;
 
     Node* curNode = &q->allNodes[indexNode];
     Node* parent = &q->allNodes[(indexNode - 1) / 2];
@@ -33,7 +35,7 @@ void siftUp(priorQueue* q, int indexNode) {
         *curNode = *parent;
         *parent = temp;
 
-        siftUp(q, indexNode / 2);
+        siftUp(q, (indexNode - 1) / 2);
     }
 }
 
@@ -73,7 +75,7 @@ int insertMin(priorQueue* q, int key, int value) {
     }
 
     if (q->nextNode >= q->sizeAlloc) {
-        Node* temp = realloc(q->allNodes, q->sizeAlloc * 2);
+        Node* temp = realloc(q->allNodes, sizeof(Node) * q->sizeAlloc * 2);
         if (temp == NULL)
             return -1;
         q->allNodes = temp;
@@ -113,5 +115,6 @@ int sizeQueue(priorQueue* q) {
 void freeQueue(priorQueue* q) {
     if (q->allNodes != NULL)
         free(q->allNodes);
+    free(q);
 }
 
