@@ -46,61 +46,68 @@ void freeAll(int* capitals, int* typeOfCity, Graph* g, priorQueue** allQueues, i
     
 }
 
-
-int main(void)
-{
-    FILE* f = fopen("input.txt", "r");
-
+int readInput(const char* filename, Graph** g, int* n, int* m, int* k, int** capitals, int** typeOfCity) {
+    FILE* f = fopen(filename, "r");
     if (f == NULL) {
         printf("...something went wrong\n");
         return -1;
     }
 
-    int n, m;
-    if (fscanf(f, "%d %d", &n, &m) != 2) {
-        printf("input is wrong\n");
-        return -1;
-    }
-    
-    Graph* g = inputGraph(f, n, m);
-    if (g == NULL) {
-        // сюда попадает и случай, когда в графе нет вершин. Рассматривать его я не буду, тк не считаю его корректным
+    if (fscanf(f, "%d %d", n, m) != 2) {
         fclose(f);
         return -1;
     }
 
-    int k;
-
-    if (fscanf(f, "%d", &k) != 1) {
-        printf("input is wrong\n");
-        freeGraph(g);
+    *g = inputGraph(f, *n, *m);
+    if (*g == NULL) {
         fclose(f);
         return -1;
     }
 
-    int* capitals = calloc(k, sizeof(int));
-    int* typeOfCity = calloc(n, sizeof(int));
-
-    if (capitals == NULL || typeOfCity == NULL) {
-        freeAll(capitals, typeOfCity, g, NULL, 0);
+    if (fscanf(f, "%d", k) != 1) {
+        freeAll(NULL, NULL, *g, NULL, 0);
         fclose(f);
         return -1;
     }
 
-    for (int i = 0; i < n; ++i)
-        typeOfCity[i] = -1;
+    *capitals = calloc(*k, sizeof(int));
+    *typeOfCity = malloc(*n * sizeof(int));
 
-    for (int i = 0; i < k; ++i) {
+    if (*capitals == NULL || *typeOfCity == NULL) {
+        freeAll(*capitals, *typeOfCity, *g, NULL, 0);
+        fclose(f);
+        return -1;
+    }
+
+    for (int i = 0; i < *n; ++i)
+        (*typeOfCity)[i] = -1;
+
+    for (int i = 0; i < *k; ++i) {
         int cap;
         if (fscanf(f, "%d", &cap) != 1) {
-            freeAll(capitals, typeOfCity, g, NULL, 0);
+            freeAll(*capitals, *typeOfCity, *g, NULL, 0);
             fclose(f);
             return -1;
         }
-        capitals[i] = cap - 1;
+        (*capitals)[i] = cap - 1;
     }
 
     fclose(f);
+    return 0;
+}
+
+int main(void)
+{
+    Graph* g = NULL;
+    int n, m, k;
+    int* capitals = NULL;
+    int* typeOfCity = NULL;
+
+    // Передаем адреса переменных (&), чтобы функция могла записать в них значения
+    if (readInput("input.txt", &g, &n, &m, &k, &capitals, &typeOfCity) != 0) {
+        printf("input is wrong\n");
+        return -1;
+    }
 
     // capitals - список столиц (для сохранения очередности)
     // typeOfCity - каждому городу по индексу присваивается принадлежность какому-то гос-ву (иначе -1)
