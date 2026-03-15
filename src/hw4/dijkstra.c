@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-void freeAllQueues(priorQueue** q, int size) {
+void freeAllQueues(priorQueue** q, int size)
+{
     int i = 0;
     while (i < size && q[i] != NULL) {
         freeQueue(q[i]);
@@ -14,7 +14,8 @@ void freeAllQueues(priorQueue** q, int size) {
     free(q);
 }
 
-void freeAll(int* capitals, int* typeOfCity, Graph* g, priorQueue** allQueues, int numAllocQueues) {
+void freeAll(int* capitals, int* typeOfCity, Graph* g, priorQueue** allQueues, int numAllocQueues)
+{
     if (capitals != NULL)
         free(capitals);
     if (typeOfCity != NULL)
@@ -23,12 +24,12 @@ void freeAll(int* capitals, int* typeOfCity, Graph* g, priorQueue** allQueues, i
         freeGraph(g);
     if (allQueues != NULL)
         freeAllQueues(allQueues, numAllocQueues);
-    
 }
 
-int solve(Graph* g, int k, int* capitals, int* typeOfCity) {
-    
-    priorQueue** allQueues = malloc(sizeof(priorQueue*) * k); 
+int solve(Graph* g, int k, int* capitals, int* typeOfCity)
+{
+
+    priorQueue** allQueues = malloc(sizeof(priorQueue*) * k);
     if (allQueues == NULL) {
         freeAll(capitals, typeOfCity, g, NULL, 0);
         return -1;
@@ -40,7 +41,6 @@ int solve(Graph* g, int k, int* capitals, int* typeOfCity) {
             freeAll(capitals, typeOfCity, g, allQueues, i + 1);
             return -1;
         }
-
     }
 
     for (int i = 0; i < k; ++i) { // добавляю в каждую очередь соответствующую столицу
@@ -56,12 +56,12 @@ int solve(Graph* g, int k, int* capitals, int* typeOfCity) {
     int curCapital = capitals[curIndexCapital];
 
     while (notNullQueue > 0) {
-       // теперь (почти) Дейкстра для каждой столицы - по одной итерации
-       // 1. Извлекаю из очереди город с мин стоимостью достижения
-       // 2. Добавляю все возможные следующие города в очередь (если ещё не заняты), но их вес - вес ребра до них из текущей вершины
-       // 3. Перехожу к след городу
-       // Во всех очередях максимум e * k = n * n * k городов, т.к. я не обновляю веса, а просто пихаю всё в очередь почти без разбора 
-        
+        // теперь (почти) Дейкстра для каждой столицы - по одной итерации
+        // 1. Извлекаю из очереди город с мин стоимостью достижения
+        // 2. Добавляю все возможные следующие города в очередь (если ещё не заняты), но их вес - вес ребра до них из текущей вершины
+        // 3. Перехожу к след городу
+        // Во всех очередях максимум e * k = n * n * k городов, т.к. я не обновляю веса, а просто пихаю всё в очередь почти без разбора
+
         if (sizeQueue(allQueues[curIndexCapital]) == 0) {
             curIndexCapital = (curIndexCapital + 1) % k;
             curCapital = capitals[curIndexCapital];
@@ -76,7 +76,7 @@ int solve(Graph* g, int k, int* capitals, int* typeOfCity) {
             else
                 deleteMin(allQueues[curIndexCapital]);
         }
-    
+
         if (nextVertex == -1) {
             notNullQueue--;
             curIndexCapital = (curIndexCapital + 1) % k;
@@ -106,5 +106,3 @@ int solve(Graph* g, int k, int* capitals, int* typeOfCity) {
     freeAllQueues(allQueues, k);
     return 0;
 }
-
-

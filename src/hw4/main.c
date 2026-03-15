@@ -1,8 +1,8 @@
 #include "dijkstra.h"
 #include "graph.h"
 #include "readFile.h"
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int main(void)
 {
@@ -37,4 +37,3 @@ int main(void)
     freeAll(capitals, typeOfCity, g, NULL, 0);
     return 0;
 }
-

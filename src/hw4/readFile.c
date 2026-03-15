@@ -1,33 +1,34 @@
 #include "readFile.h"
-#include "graph.h"
 #include "dijkstra.h"
+#include "graph.h"
 #include <stdio.h>
 #include <stdlib.h>
 
+Graph* inputGraph(FILE* f, int sizeGraph, int numEdges)
+{
 
-Graph* inputGraph(FILE* f, int sizeGraph, int numEdges) {
-    
     Graph* g = initGraph(sizeGraph);
     if (g == NULL)
         return NULL;
-    
+
     for (int i = 0; i < numEdges; ++i) {
 
-        int v1, v2, value; 
-        
+        int v1, v2, value;
+
         if (fscanf(f, "%d %d %d", &v1, &v2, &value) != 3) {
             printf("input is wrong\n");
             freeGraph(g);
             return NULL;
         }
-        
+
         connectVertices(g, v1 - 1, v2 - 1, value);
     }
-    
+
     return g;
 }
 
-int readInput(const char* filename, Graph** g, int* n, int* m, int* k, int** capitals, int** typeOfCity) {
+int readInput(const char* filename, Graph** g, int* n, int* m, int* k, int** capitals, int** typeOfCity)
+{
     FILE* f = fopen(filename, "r");
     if (f == NULL) {
         printf("...something went wrong\n");

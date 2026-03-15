@@ -1,6 +1,6 @@
 #include "graph.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 struct Graph {
     int sizeMatrix;
@@ -9,8 +9,8 @@ struct Graph {
     int lastNeighbor;
 };
 
-
-int** initMatrix(int n) {
+int** initMatrix(int n)
+{
     int** matrix = malloc(n * sizeof(int*));
     if (matrix == NULL)
         return NULL;
@@ -27,15 +27,15 @@ int** initMatrix(int n) {
     return matrix;
 }
 
-
-void freeMatrix(int** matrix) {
+void freeMatrix(int** matrix)
+{
 
     free(matrix[0]);
     free(matrix);
-
 }
 
-Graph* initGraph(int n) {
+Graph* initGraph(int n)
+{
     Graph* g = malloc(sizeof(Graph));
     if (g == NULL)
         return NULL;
@@ -53,7 +53,8 @@ Graph* initGraph(int n) {
     return g;
 }
 
-void freeGraph(Graph* g) {
+void freeGraph(Graph* g)
+{
     if (g == NULL)
         return;
 
@@ -63,19 +64,19 @@ void freeGraph(Graph* g) {
     free(g);
 }
 
-
-int connectVertices(Graph* g, int v1, int v2, int value) {
+int connectVertices(Graph* g, int v1, int v2, int value)
+{
     if (g == NULL || v1 < 0 || v1 >= g->sizeMatrix || v2 < 0 || v2 >= g->sizeMatrix)
         return -1;
-    
+
     g->matrix[v1][v2] = value;
     g->matrix[v2][v1] = value;
-    
+
     return 0;
 }
 
-
-void startGetNeighbors(Graph* g, int vertex) {
+void startGetNeighbors(Graph* g, int vertex)
+{
     if (g == NULL || vertex < 0 || vertex >= g->sizeMatrix)
         return;
 
@@ -83,8 +84,8 @@ void startGetNeighbors(Graph* g, int vertex) {
     g->lastNeighbor = 0;
 }
 
-
-int getNeighbor(Graph* g, int* value) {
+int getNeighbor(Graph* g, int* value)
+{
     if (g == NULL || g->curVertex == -1 || g->lastNeighbor == -1)
         return -1;
 
@@ -103,4 +104,3 @@ int getNeighbor(Graph* g, int* value) {
 
     return i;
 }
-

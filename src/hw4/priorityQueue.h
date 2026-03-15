@@ -13,4 +13,3 @@ int getMin(priorQueue* q);
 int sizeQueue(priorQueue* q);
 
 void freeQueue(priorQueue* q);
-

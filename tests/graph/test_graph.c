@@ -4,15 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int expected1[] = {0, 0, 2}; 
+int expected1[] = { 0, 0, 2 };
 
-int expected2[] = {0, 0, 0, 4, 4}; 
+int expected2[] = { 0, 0, 0, 4, 4 };
 
-int expected3[] = {0, 0, 0, 3, 3, 3}; 
+int expected3[] = { 0, 0, 0, 3, 3, 3 };
 
-int expected4[] = {1, 1, 1, 3, 1, 5};
+int expected4[] = { 1, 1, 1, 3, 1, 5 };
 
-int solveFunction(char* nameTestFile, const int* expected) {
+int solveFunction(char* nameTestFile, const int* expected)
+{
     Graph* g = NULL;
     int n, m, k;
     int* capitals = NULL;
@@ -40,9 +41,10 @@ int solveFunction(char* nameTestFile, const int* expected) {
     return correctAnswer;
 }
 
-int main(void) {
-    int passedTests = 0; 
-    
+int main(void)
+{
+    int passedTests = 0;
+
     int err = solveFunction("input_files/input1.txt", expected1);
     if (err == -1)
         printf("...something went wrong\n");
@@ -72,7 +74,7 @@ int main(void) {
         printf("Test 3 passed\n");
         passedTests++;
     }
-    
+
     err = solveFunction("input_files/input4.txt", expected4);
     if (err == -1)
         printf("...something went wrong\n");
@@ -86,4 +88,3 @@ int main(void) {
     printf("Passed %d tests!\n", passedTests);
     return 0;
 }
-

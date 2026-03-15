@@ -1,6 +1,6 @@
 #include "priorityQueue.h"
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct Node {
     int key;
@@ -13,7 +13,8 @@ struct priorQueue {
     Node* allNodes;
 };
 
-priorQueue* initQueue(void) {
+priorQueue* initQueue(void)
+{
     priorQueue* q = malloc(sizeof(priorQueue));
     q->sizeAlloc = 0;
     q->nextNode = 0;
@@ -21,14 +22,15 @@ priorQueue* initQueue(void) {
     return q;
 }
 
-void siftUp(priorQueue* q, int indexNode) {
+void siftUp(priorQueue* q, int indexNode)
+{
     // q->allNodes + curNode * sizeof(Node) = указатель на ноду в списке нодов
     if (indexNode == 0)
         return;
 
     Node* curNode = &q->allNodes[indexNode];
     Node* parent = &q->allNodes[(indexNode - 1) / 2];
-    
+
     if (curNode->key < parent->key) {
 
         Node temp = *curNode;
@@ -39,7 +41,8 @@ void siftUp(priorQueue* q, int indexNode) {
     }
 }
 
-void siftDown(priorQueue* q, int indexNode) {
+void siftDown(priorQueue* q, int indexNode)
+{
 
     int lChild = indexNode * 2 + 1;
     int rChild = indexNode * 2 + 2;
@@ -64,7 +67,8 @@ void siftDown(priorQueue* q, int indexNode) {
     }
 }
 
-int insertMin(priorQueue* q, int key, int value) {
+int insertMin(priorQueue* q, int key, int value)
+{
 
     if (q->sizeAlloc == 0) {
         q->allNodes = malloc(sizeof(Node));
@@ -83,7 +87,7 @@ int insertMin(priorQueue* q, int key, int value) {
     }
 
     // теперь q->nextNode указывает туда, куда можно запихать новую ноду
-    
+
     q->allNodes[q->nextNode].key = key;
     q->allNodes[q->nextNode].value = value;
 
@@ -92,29 +96,32 @@ int insertMin(priorQueue* q, int key, int value) {
     return 0;
 }
 
-void deleteMin(priorQueue* q) {
+void deleteMin(priorQueue* q)
+{
     if (q->nextNode == 0)
         return;
     q->allNodes[0].key = q->allNodes[q->nextNode - 1].key;
     q->allNodes[0].value = q->allNodes[q->nextNode - 1].value;
     q->nextNode--;
-    
+
     siftDown(q, 0);
 }
 
-int getMin(priorQueue* q) {
+int getMin(priorQueue* q)
+{
     if (q->nextNode == 0)
         return -1;
     return q->allNodes[0].value;
 }
 
-int sizeQueue(priorQueue* q) {
+int sizeQueue(priorQueue* q)
+{
     return q->nextNode;
 }
 
-void freeQueue(priorQueue* q) {
+void freeQueue(priorQueue* q)
+{
     if (q->allNodes != NULL)
         free(q->allNodes);
     free(q);
 }
-

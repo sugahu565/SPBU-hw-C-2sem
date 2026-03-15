@@ -9,4 +9,3 @@ int connectVertices(Graph* g, int v1, int v2, int value);
 
 void startGetNeighbors(Graph* g, int vertex);
 int getNeighbor(Graph* g, int* value);
-
