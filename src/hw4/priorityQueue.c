@@ -22,7 +22,6 @@ PriorQueue* initQueue(void)
     return q;
 }
 
-
 void siftUp(PriorQueue* q, int indexNode) // NOLINT(misc-no-recursion)
 {
     // q->allNodes + curNode * sizeof(Node) = указатель на ноду в списке нодов
