@@ -21,7 +21,7 @@ int main(void)
     // allQueues - все очереди (обращаться по индексу, в котором столица лежит в capitals)
     // g - исходный граф (можно смотреть всех соседей по имитации итератора)
 
-    int err = solve(g, n, k, capitals, typeOfCity);
+    int err = solve(g, k, capitals, typeOfCity);
 
     if (err == -1)
         return -1;

@@ -7,11 +7,11 @@ typedef struct Node {
     int value;
 } Node;
 
-typedef struct priorQueue {
+struct priorQueue {
     int sizeAlloc;
     int nextNode;
     Node* allNodes;
-} priorQueue;
+};
 
 priorQueue* initQueue(void) {
     priorQueue* q = malloc(sizeof(priorQueue));

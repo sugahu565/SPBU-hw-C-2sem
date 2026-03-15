@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct Graph {
+struct Graph {
     int sizeMatrix;
     int** matrix;
     int curVertex;
     int lastNeighbor;
-} Graph;
+};
 
 
 int** initMatrix(int n) {

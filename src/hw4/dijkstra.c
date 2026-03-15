@@ -26,7 +26,7 @@ void freeAll(int* capitals, int* typeOfCity, Graph* g, priorQueue** allQueues, i
     
 }
 
-int solve(Graph* g, int n, int k, int* capitals, int* typeOfCity) {
+int solve(Graph* g, int k, int* capitals, int* typeOfCity) {
     
     priorQueue** allQueues = malloc(sizeof(priorQueue*) * k); 
     if (allQueues == NULL) {
