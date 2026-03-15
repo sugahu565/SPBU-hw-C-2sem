@@ -103,7 +103,6 @@ int main(void)
     int* capitals = NULL;
     int* typeOfCity = NULL;
 
-    // Передаем адреса переменных (&), чтобы функция могла записать в них значения
     if (readInput("input.txt", &g, &n, &m, &k, &capitals, &typeOfCity) != 0) {
         printf("input is wrong\n");
         return -1;
